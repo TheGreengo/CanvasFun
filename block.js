@@ -1,25 +1,52 @@
 let c = document.getElementById("block-canvas");
 let ctx = c.getContext("2d");
-let het = 160
-let wid = 100
-let px 
+let wid = 160;
+let het = 100;
+let posX = 80;
+let posY = 50;
 
-function update() {
-    let g = 0;
-    let b = 0;
-    for (i = 0; i < het; i++) {
-        for (j = 0; j < wid; j++) {
-            if (((i+j) % 2) == 0) {
-                g = 255;
-                b = 0;
-            } else {
-                g = 0;
-                b = 255;
-            }
-            ctx.fillStyle = "rgba("+0+","+g+","+b+","+(255/255)+")";
-            ctx.fillRect( i*5, j*5, 5, 5);
+let px = new Array(wid).fill([0,0,255]);
+let pix = new Array(het).fill(px);
+
+for (i = 0; i < wid; i++) {
+    for (j = 0; j < het; j++) {
+        setPixel(i, j, 0, 0, 255);
+    }
+}
+
+function setPixel(x, y, r, g, b) {
+    ctx.fillStyle = "rgba("+r+","+g+","+b+","+(255/255)+")";
+    ctx.fillRect( x*5, y*5, 5, 5);
+}
+
+function drawBlock(x, y, r, g, b) {
+    for (i = 0; i < 3; i++) {
+        for (j = 0; j < 3; j++) {
+            setPixel(x + i, y + j, r, g, b);
         }
     }
+}
+
+drawBlock(posX, posY, 0, 255, 0);
+
+function up() {
+    posY--;
+    drawBlock(posX, posY, 0, 255, 0);
+}
+
+function left() {
+    posX--;
+    drawBlock(posX, posY, 0, 255, 0);
+}
+
+function right() {
+    posX++;
+    drawBlock(posX, posY, 0, 255, 0);
+}
+
+function down() {
+    posY++;
+    drawBlock(posX, posY, 0, 255, 0);
 }
 
 function clar() {
