@@ -32,23 +32,50 @@ drawBlock(posX, posY, 0, 255, 0);
 function up() {
     posY--;
     drawBlock(posX, posY, 0, 255, 0);
+    for (j = 0; j < 3; j++) {
+        setPixel(posX+j, posY+3, 0, 0, 255);
+    }
 }
 
 function left() {
     posX--;
     drawBlock(posX, posY, 0, 255, 0);
+    for (j = 0; j < 3; j++) {
+        setPixel(posX+3, posY+j, 0, 0, 255);
+    }
 }
 
 function right() {
     posX++;
     drawBlock(posX, posY, 0, 255, 0);
+    for (j = 0; j < 3; j++) {
+        setPixel(posX-1, posY+j, 0, 0, 255);
+    }
 }
 
 function down() {
     posY++;
     drawBlock(posX, posY, 0, 255, 0);
+    for (j = 0; j < 3; j++) {
+        setPixel(posX+j, posY-1, 0, 0, 255);
+    }
 }
 
 function clar() {
     ctx.clearRect(0, 0, c.width, c.height);
 }
+
+document.addEventListener('keydown', function(event) {
+    if(event.keyCode == 37) {
+        left();
+    }
+    else if(event.keyCode == 38) {
+        up();
+    }
+    else if(event.keyCode == 39) {
+        right();
+    }
+    else if(event.keyCode == 40) {
+        down();
+    }
+});
