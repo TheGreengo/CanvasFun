@@ -5,12 +5,12 @@ let het = 100;
 let posX = 80;
 let posY = 50;
 
-let px = new Array(wid).fill([0,0,255]);
+let px = new Array(wid).fill([255, 255, 255]);
 let pix = new Array(het).fill(px);
 
 for (i = 0; i < wid; i++) {
     for (j = 0; j < het; j++) {
-        setPixel(i, j, 0, 0, 255);
+        setPixel(i, j, 255, 255, 255);
     }
 }
 
@@ -33,7 +33,7 @@ function up() {
     posY--;
     drawBlock(posX, posY, 0, 255, 0);
     for (j = 0; j < 3; j++) {
-        setPixel(posX+j, posY+3, 0, 0, 255);
+        setPixel(posX+j, posY+3, 255, 255, 255);
     }
 }
 
@@ -41,7 +41,7 @@ function left() {
     posX--;
     drawBlock(posX, posY, 0, 255, 0);
     for (j = 0; j < 3; j++) {
-        setPixel(posX+3, posY+j, 0, 0, 255);
+        setPixel(posX+3, posY+j, 255, 255, 255);
     }
 }
 
@@ -49,7 +49,7 @@ function right() {
     posX++;
     drawBlock(posX, posY, 0, 255, 0);
     for (j = 0; j < 3; j++) {
-        setPixel(posX-1, posY+j, 0, 0, 255);
+        setPixel(posX-1, posY+j, 255, 255, 255);
     }
 }
 
@@ -57,7 +57,7 @@ function down() {
     posY++;
     drawBlock(posX, posY, 0, 255, 0);
     for (j = 0; j < 3; j++) {
-        setPixel(posX+j, posY-1, 0, 0, 255);
+        setPixel(posX+j, posY-1, 255, 255, 255);
     }
 }
 
@@ -67,15 +67,56 @@ function clar() {
 
 document.addEventListener('keydown', function(event) {
     if(event.keyCode == 37) {
-        left();
+        if (checkLeftBound()) {
+            left();
+        }
     }
     else if(event.keyCode == 38) {
-        up();
+        if (checkUpBound()) {
+            up();
+        }
     }
     else if(event.keyCode == 39) {
-        right();
+        if (checkRightBound()) {
+            right();
+        }
     }
     else if(event.keyCode == 40) {
-        down();
+        if (checkLowBound()) {
+            down();
+        }
     }
 });
+
+function checkLowBound() {
+    // first check if we're at the bottom of the screen
+    if (posY >= 97) {
+        return false;
+    }
+    // then check if the colors is not the background
+    return true;
+}
+
+function checkLeftBound() {
+    // first check if we're at the left edge of the screen
+    if (posX <= 0) {
+        return false;
+    }
+    return true;
+}
+
+function checkRightBound() {
+    // first check if we're at the left edge of the screen
+    if (posX >= 157) {
+        return false;
+    }
+    return true;
+}
+
+function checkUpBound() {
+    // first check if we're at the left edge of the screen
+    if (posY <= 0) {
+        return false;
+    }
+    return true;
+}
