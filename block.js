@@ -2,8 +2,8 @@ let c = document.getElementById("block-canvas");
 let ctx = c.getContext("2d");
 let wid = 140;
 let het = 90;
-let posX = 80;
-let posY = 50;
+let posX = 8;
+let posY = 5;
 
 let pix = Array(het);
 for (i = 0; i < het; i++) {
@@ -12,7 +12,11 @@ for (i = 0; i < het; i++) {
 
 for (i = 0; i < het; i++) {
     for (j = 0; j < wid; j++) {
-        setPixel(i, j, 255, 255, 255);
+        if (i > het - 6) {
+            setPixel(i, j, 0, 255, 0);
+        } else {
+            setPixel(i, j, 255, 255, 255);
+        }
     }
 }
 
@@ -36,7 +40,7 @@ function drawBlock(y, x, r, g, b) {
 function up() {
     posY--;
     for (j = 0; j < 3; j++) {
-        setPixel(posY, posX+j, 0, 255, 0);
+        setPixel(posY, posX+j, 165, 42, 42);
     }
     for (j = 0; j < 3; j++) {
         setPixel(posY+3, posX+j, 255, 255, 255);
@@ -46,7 +50,7 @@ function up() {
 function left() {
     posX--;
     for (j = 0; j < 3; j++) {
-        setPixel(posY+j, posX, 0, 255, 0);
+        setPixel(posY+j, posX, 165, 42, 42);
     }
     for (j = 0; j < 3; j++) {
         setPixel(posY+j, posX+3, 255, 255, 255);
@@ -56,7 +60,7 @@ function left() {
 function right() {
     posX++;
     for (j = 0; j < 3; j++) {
-        setPixel(posY+j, posX+2, 0, 255, 0);
+        setPixel(posY+j, posX+2, 165, 42, 42);
     }
     for (j = 0; j < 3; j++) {
         setPixel(posY+j, posX-1, 255, 255, 255);
@@ -66,7 +70,7 @@ function right() {
 function down() {
     posY++;
     for (j = 0; j < 3; j++) {
-        setPixel(posY+2, posX+j, 0, 255, 0);
+        setPixel(posY+2, posX+j, 165, 42, 42);
     }
     for (j = 0; j < 3; j++) {
         setPixel(posY-1, posX+j, 255, 255, 255);
@@ -152,5 +156,4 @@ function checkUpBound() {
     );
 }
 
-setPixel(80, 120, 0, 255, 255);
-drawBlock(posY, posX, 0, 255, 0);
+drawBlock(posY, posX, 165, 42, 42);
