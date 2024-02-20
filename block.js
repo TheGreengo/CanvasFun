@@ -1,7 +1,7 @@
 let c = document.getElementById("block-canvas");
 let ctx = c.getContext("2d");
-let wid = 160;
-let het = 100;
+let wid = 140;
+let het = 90;
 let posX = 80;
 let posY = 50;
 
@@ -80,22 +80,22 @@ function clar() {
 document.addEventListener('keydown', function(event) {
     if(event.keyCode == 37) {
         if (checkLeftBound()) {
-            left();console.log(pix[80][120]);
+            left();
         }
     }
     else if(event.keyCode == 38) {
         if (checkUpBound()) {
-            up();console.log(pix[80][120]);
+            up();
         }
     }
     else if(event.keyCode == 39) {
         if (checkRightBound()) {
-            right();console.log(pix[80][120]);
+            right();
         }
     }
     else if(event.keyCode == 40) {
         if (checkLowBound()) {
-            down();console.log(pix[80][120]);
+            down();
         }
     }
 });
@@ -105,11 +105,11 @@ function checkLowBound() {
     if (posY >= 97) {
         return false;
     }
-    // console.log("at: ",posY+4, "," ,posX, ": ", pix[posY+4][posX]);
-    return true;
-    // then check if the colors is not the background
+
     return (
-        pix[posX][posY]
+        pix[posY + 3][posX].toString() == [255,255,255].toString() &&
+        pix[posY + 3][posX + 1].toString() == [255,255,255].toString() &&
+        pix[posY + 3][posX + 2].toString() == [255,255,255].toString()
     );
 }
 
@@ -118,7 +118,12 @@ function checkLeftBound() {
     if (posX <= 0) {
         return false;
     }
-    return true;
+
+    return (
+        pix[posY][posX - 1].toString() == [255,255,255].toString() &&
+        pix[posY + 1][posX - 1].toString() == [255,255,255].toString() &&
+        pix[posY + 2][posX - 1].toString() == [255,255,255].toString()
+    );
 }
 
 function checkRightBound() {
@@ -126,7 +131,12 @@ function checkRightBound() {
     if (posX >= 157) {
         return false;
     }
-    return true;
+
+    return (
+        pix[posY][posX + 3].toString() == [255,255,255].toString() &&
+        pix[posY + 1][posX + 3].toString() == [255,255,255].toString() &&
+        pix[posY + 2][posX + 3].toString() == [255,255,255].toString()
+    );
 }
 
 function checkUpBound() {
@@ -134,7 +144,12 @@ function checkUpBound() {
     if (posY <= 0) {
         return false;
     }
-    return true;
+
+    return (
+        pix[posY - 1][posX].toString() == [255,255,255].toString() &&
+        pix[posY - 1][posX + 1].toString() == [255,255,255].toString() &&
+        pix[posY - 1][posX + 2].toString() == [255,255,255].toString()
+    );
 }
 
 setPixel(80, 120, 0, 255, 255);
