@@ -2,8 +2,8 @@ let c = document.getElementById("block-canvas");
 let ctx = c.getContext("2d");
 let wid = 140;
 let het = 90;
-let posX = 8;
-let posY = 5;
+let posX = 0;
+let posY = 0;
 
 let course = [
     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -26,9 +26,14 @@ let course = [
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
 
-let pix = Array(het);
 for (i = 0; i < het; i++) {
-    pix[i] = Array(wid);
+    for (j = 0; j < wid; j++) {
+        if (i > het - 6) {
+            setPixel(i, j, 0, 255, 0);
+        } else {
+            setPixel(i, j, 255, 255, 255);
+        }
+    }
 }
 
 for (i = 0; i < (het / 5); i++) {
@@ -49,23 +54,12 @@ for (i = 0; i < (het / 5); i++) {
     }
 }
 
-// for (i = 0; i < het; i++) {
-//     for (j = 0; j < wid; j++) {
-//         if (i > het - 6) {
-//             setPixel(i, j, 0, 255, 0);
-//         } else {
-//             setPixel(i, j, 255, 255, 255);
-//         }
-//     }
-// }
-
 function setPixel(y, x, r, g, b) {
     ctx.fillStyle = "rgba("+r+","+g+","+b+","+(255/255)+")";
     ctx.fillRect( x*5, y*5, 5, 5);
     if (y === 80 & x === 120) {
         console.log("YOU BASTARD ", r, ',',g,',',b);
     }
-    pix[y][x] = [r,g,b];
 }
 
 function drawBlock(y, x, r, g, b) {
@@ -76,42 +70,44 @@ function drawBlock(y, x, r, g, b) {
     }
 }
 
+// so to check if up is fine, we check
+
 function up() {
     posY--;
-    for (j = 0; j < 3; j++) {
+    for (j = 0; j < 5; j++) {
         setPixel(posY, posX+j, 165, 42, 42);
     }
-    for (j = 0; j < 3; j++) {
-        setPixel(posY+3, posX+j, 255, 255, 255);
+    for (j = 0; j < 5; j++) {
+        setPixel(posY+5, posX+j, 255, 255, 255);
     }
 }
 
 function left() {
     posX--;
-    for (j = 0; j < 3; j++) {
+    for (j = 0; j < 5; j++) {
         setPixel(posY+j, posX, 165, 42, 42);
     }
-    for (j = 0; j < 3; j++) {
-        setPixel(posY+j, posX+3, 255, 255, 255);
+    for (j = 0; j < 5; j++) {
+        setPixel(posY+j, posX+5, 255, 255, 255);
     }
 }
 
 function right() {
     posX++;
-    for (j = 0; j < 3; j++) {
-        setPixel(posY+j, posX+2, 165, 42, 42);
+    for (j = 0; j < 5; j++) {
+        setPixel(posY+j, posX+4, 165, 42, 42);
     }
-    for (j = 0; j < 3; j++) {
+    for (j = 0; j < 5; j++) {
         setPixel(posY+j, posX-1, 255, 255, 255);
     }
 }
 
 function down() {
     posY++;
-    for (j = 0; j < 3; j++) {
-        setPixel(posY+2, posX+j, 165, 42, 42);
+    for (j = 0; j < 5; j++) {
+        setPixel(posY+4, posX+j, 165, 42, 42);
     }
-    for (j = 0; j < 3; j++) {
+    for (j = 0; j < 5; j++) {
         setPixel(posY-1, posX+j, 255, 255, 255);
     }
 }
@@ -122,21 +118,25 @@ function clar() {
 
 document.addEventListener('keydown', function(event) {
     if(event.keyCode == 37) {
+        console.log("left");
         if (checkLeftBound()) {
             left();
         }
     }
     else if(event.keyCode == 38) {
+        console.log("up");
         if (checkUpBound()) {
             up();
         }
     }
     else if(event.keyCode == 39) {
+        console.log("right");
         if (checkRightBound()) {
             right();
         }
     }
     else if(event.keyCode == 40) {
+        console.log("down");
         if (checkLowBound()) {
             down();
         }
@@ -149,10 +149,19 @@ function checkLowBound() {
         return false;
     }
 
+    let x_cell = Math.floor(posX / 5);
+    let y_cell = Math.floor(posY / 5);
+    let x_offset = posX % 5;
+    let y_offset = posY % 5;
+
+    if (y_offset != 0) {
+        return true;
+    }
+    // if offset
     return (
-        pix[posY + 3][posX].toString() == [255,255,255].toString() &&
-        pix[posY + 3][posX + 1].toString() == [255,255,255].toString() &&
-        pix[posY + 3][posX + 2].toString() == [255,255,255].toString()
+        x_offset == 0 ? 
+        course[y_cell + 1][x_cell] == 0 : 
+        ((course[y_cell + 1][x_cell] == 0) && (course[y_cell + 1][x_cell + 1] == 0))
     );
 }
 
@@ -162,10 +171,19 @@ function checkLeftBound() {
         return false;
     }
 
+    let x_cell = Math.floor(posX / 5);
+    let y_cell = Math.floor(posY / 5);
+    let x_offset = posX % 5;
+    let y_offset = posY % 5;
+
+    if (x_offset != 0) {
+        return true;
+    }
+    // if offset
     return (
-        pix[posY][posX - 1].toString() == [255,255,255].toString() &&
-        pix[posY + 1][posX - 1].toString() == [255,255,255].toString() &&
-        pix[posY + 2][posX - 1].toString() == [255,255,255].toString()
+        y_offset == 0 ? 
+        course[y_cell][x_cell - 1] == 0 : 
+        ((course[y_cell][x_cell - 1] == 0) && (course[y_cell + 1][x_cell - 1] == 0))
     );
 }
 
@@ -175,10 +193,19 @@ function checkRightBound() {
         return false;
     }
 
+    let x_cell = Math.floor(posX / 5);
+    let y_cell = Math.floor(posY / 5);
+    let x_offset = posX % 5;
+    let y_offset = posY % 5;
+
+    if (x_offset != 0) {
+        return true;
+    }
+    // if offset
     return (
-        pix[posY][posX + 3].toString() == [255,255,255].toString() &&
-        pix[posY + 1][posX + 3].toString() == [255,255,255].toString() &&
-        pix[posY + 2][posX + 3].toString() == [255,255,255].toString()
+        y_offset == 0 ? 
+        course[y_cell][x_cell + 1] == 0 : 
+        ((course[y_cell][x_cell + 1] == 0) && (course[y_cell + 1][x_cell + 1] == 0))
     );
 }
 
@@ -188,11 +215,20 @@ function checkUpBound() {
         return false;
     }
 
+    let x_cell = Math.floor(posX / 5);
+    let y_cell = Math.floor(posY / 5);
+    let x_offset = posX % 5;
+    let y_offset = posY % 5;
+
+    if (y_offset != 0) {
+        return true;
+    }
+    // if offset
     return (
-        pix[posY - 1][posX].toString() == [255,255,255].toString() &&
-        pix[posY - 1][posX + 1].toString() == [255,255,255].toString() &&
-        pix[posY - 1][posX + 2].toString() == [255,255,255].toString()
+        x_offset == 0 ? 
+        course[y_cell - 1][x_cell] == 0 : 
+        ((course[y_cell - 1][x_cell] == 0) && (course[y_cell - 1][x_cell + 1] == 0))
     );
 }
 
-drawBlock(0, 0, 165, 42, 42);
+drawBlock(posX, posY, 165, 42, 42);
