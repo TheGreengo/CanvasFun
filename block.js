@@ -31,15 +31,33 @@ for (i = 0; i < het; i++) {
     pix[i] = Array(wid);
 }
 
-for (i = 0; i < het; i++) {
-    for (j = 0; j < wid; j++) {
-        if (i > het - 6) {
-            setPixel(i, j, 0, 255, 0);
+for (i = 0; i < (het / 5); i++) {
+    for (j = 0; j < (wid / 5); j++) {
+        if (course[i][j] == 1) {
+            ctx.fillStyle = "rgba("+0+","+0+","+255+","+(255/255)+")";
+            ctx.fillRect( j*25, i*25, 25, 25);
+        } else if (course[i][j] == 2) {
+            ctx.fillStyle = "rgba("+128+","+128+","+128+","+(255/255)+")";
+            ctx.fillRect( j*25, i*25, 25, 25);
+        }  else  if(course[i][j] == 3) {
+            ctx.fillStyle = "rgba("+128+","+255+","+255+","+(255/255)+")";
+            ctx.fillRect( j*25, i*25, 25, 25);
         } else {
-            setPixel(i, j, 255, 255, 255);
+            ctx.fillStyle = "rgba("+255+","+255+","+255+","+(255/255)+")";
+            ctx.fillRect( j*25, i*25, 25, 25);
         }
     }
 }
+
+// for (i = 0; i < het; i++) {
+//     for (j = 0; j < wid; j++) {
+//         if (i > het - 6) {
+//             setPixel(i, j, 0, 255, 0);
+//         } else {
+//             setPixel(i, j, 255, 255, 255);
+//         }
+//     }
+// }
 
 function setPixel(y, x, r, g, b) {
     ctx.fillStyle = "rgba("+r+","+g+","+b+","+(255/255)+")";
@@ -51,8 +69,8 @@ function setPixel(y, x, r, g, b) {
 }
 
 function drawBlock(y, x, r, g, b) {
-    for (i = 0; i < 3; i++) {
-        for (j = 0; j < 3; j++) {
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 5; j++) {
             setPixel(y + i, x + j, r, g, b);
         }
     }
@@ -177,4 +195,4 @@ function checkUpBound() {
     );
 }
 
-drawBlock(posY, posX, 165, 42, 42);
+drawBlock(0, 0, 165, 42, 42);
