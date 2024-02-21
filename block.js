@@ -232,3 +232,17 @@ function checkUpBound() {
 }
 
 drawBlock(posX, posY, 165, 42, 42);
+
+
+
+// * TODOS:
+// * the up to only work if we're lined up with a ladder
+// * the blocks to render better than just blocks
+// * ladders appear behind the person
+// * the person to be able to fall
+// * there to be gold
+// * gold to get picked up when people interact with it
+// * zapping
+// * regrowing
+// * person looks like a person
+// * moving animation
