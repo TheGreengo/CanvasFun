@@ -59,8 +59,13 @@ for (i = 0; i < (het / 5); i++) {
             ctx.fillStyle = "rgba("+128+","+255+","+255+","+(255/255)+")";
             ctx.fillRect( j*25, i*25, 25, 25);
         }  else  if(course[i][j] == 4) {
-            ctx.fillStyle = "rgba("+128+","+128+","+0+","+(255/255)+")";
+            ctx.fillStyle = "rgba("+255+","+255+","+255+","+(255/255)+")";
             ctx.fillRect( j*25, i*25, 25, 25);
+
+            ctx.beginPath();
+            ctx.fillStyle = "rgba("+128+","+128+","+0+","+(255/255)+")";
+            ctx.ellipse(j*25 + 12.5, i*25 + 12.5, 8, 11, Math.PI, 0, 2 * Math.PI);
+            ctx.fill();
         } else {
             ctx.fillStyle = "rgba("+255+","+255+","+255+","+(255/255)+")";
             ctx.fillRect( j*25, i*25, 25, 25);
@@ -174,8 +179,9 @@ function checkLowBound() {
     // if offset
     return (
         x_offset == 0 ? 
-        course[y_cell + 1][x_cell] == 0 : 
-        ((course[y_cell + 1][x_cell] == 0) && (course[y_cell + 1][x_cell + 1] == 0))
+        course[y_cell + 1][x_cell] == 0 || course[y_cell + 1][x_cell] == 4: 
+        ((course[y_cell + 1][x_cell] == 0) || (course[y_cell + 1][x_cell] == 4) && 
+        (course[y_cell + 1][x_cell + 1] == 0) || (course[y_cell + 1][x_cell] == 4))
     );
 }
 
