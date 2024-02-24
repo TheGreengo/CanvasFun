@@ -202,8 +202,9 @@ function checkLeftBound() {
     // if offset
     return (
         y_offset == 0 ? 
-        course[y_cell][x_cell - 1] == 0 : 
-        ((course[y_cell][x_cell - 1] == 0) && (course[y_cell + 1][x_cell - 1] == 0))
+        (course[y_cell][x_cell - 1] == 0 || course[y_cell][x_cell - 1] == 4): 
+        (((course[y_cell][x_cell - 1] == 0) || (course[y_cell][x_cell - 1] == 4)) && 
+        ((course[y_cell + 1][x_cell - 1] == 0) || (course[y_cell + 1][x_cell - 1] == 4)))
     );
 }
 
@@ -224,8 +225,9 @@ function checkRightBound() {
     // if offset
     return (
         y_offset == 0 ? 
-        course[y_cell][x_cell + 1] == 0 : 
-        ((course[y_cell][x_cell + 1] == 0) && (course[y_cell + 1][x_cell + 1] == 0))
+        (course[y_cell][x_cell + 1] == 0 || course[y_cell][x_cell + 1] == 4) : 
+        ((course[y_cell][x_cell + 1] == 0 || course[y_cell][x_cell + 1] == 4) && 
+        (course[y_cell + 1][x_cell + 1] == 0 || course[y_cell + 1][x_cell + 1] == 4))
     );
 }
 
@@ -246,8 +248,9 @@ function checkUpBound() {
     // if offset
     return (
         x_offset == 0 ? 
-        course[y_cell - 1][x_cell] == 0 : 
-        ((course[y_cell - 1][x_cell] == 0) && (course[y_cell - 1][x_cell + 1] == 0))
+        (course[y_cell - 1][x_cell] == 0 || course[y_cell - 1][x_cell] == 4) : 
+        ((course[y_cell - 1][x_cell] == 0 || course[y_cell - 1][x_cell] == 4) && 
+        (course[y_cell - 1][x_cell + 1] == 0 || course[y_cell - 1][x_cell + 1] == 4))
     );
 }
 
