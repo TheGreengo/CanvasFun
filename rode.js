@@ -2,8 +2,10 @@ let c = document.getElementById("block-canvas");
 let ctx = c.getContext("2d");
 let wid = 140;
 let het = 90;
-let posX = 0;
-let posY = 0;
+let cell_x = 0;
+let cell_y = 0;
+let off_x = 0;
+let off_y = 0;
 
 // Legend:
 // 0 = background
@@ -36,6 +38,8 @@ let course = [
     [0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1,1],
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
 ];
+
+// left = 0, up = 1, right = 2, down = 3
 
 for (i = 0; i < het; i++) {
     for (j = 0; j < wid; j++) {
@@ -76,9 +80,6 @@ for (i = 0; i < (het / 5); i++) {
 function setPixel(y, x, r, g, b) {
     ctx.fillStyle = "rgba("+r+","+g+","+b+","+(255/255)+")";
     ctx.fillRect( x*5, y*5, 5, 5);
-    if (y === 80 & x === 120) {
-        console.log("YOU BASTARD ", r, ',',g,',',b);
-    }
 }
 
 function drawBlock(y, x, r, g, b) {
@@ -88,8 +89,6 @@ function drawBlock(y, x, r, g, b) {
         }
     }
 }
-
-// so to check if up is fine, we check
 
 function up() {
     posY--;
@@ -136,26 +135,23 @@ function clar() {
 }
 
 document.addEventListener('keydown', function(event) {
+    console.log(event.key == "ArrowUp");
     if(event.keyCode == 37) {
-        console.log("left");
         if (checkLeftBound()) {
             left();
         }
     }
     else if(event.keyCode == 38) {
-        console.log("up");
         if (checkUpBound()) {
             up();
         }
     }
     else if(event.keyCode == 39) {
-        console.log("right");
         if (checkRightBound()) {
             right();
         }
     }
     else if(event.keyCode == 40) {
-        console.log("down");
         if (checkLowBound()) {
             down();
         }
@@ -172,6 +168,8 @@ function checkLowBound() {
     let y_cell = Math.floor(posY / 5);
     let x_offset = posX % 5;
     let y_offset = posY % 5;
+
+    console.log(y_cell, ",", x_cell);
 
     if (y_offset != 0) {
         return true;
@@ -196,6 +194,8 @@ function checkLeftBound() {
     let x_offset = posX % 5;
     let y_offset = posY % 5;
 
+    console.log(y_cell, ",", x_cell);
+
     if (x_offset != 0) {
         return true;
     }
@@ -219,6 +219,8 @@ function checkRightBound() {
     let x_offset = posX % 5;
     let y_offset = posY % 5;
 
+    console.log(y_cell, ",", x_cell);
+
     if (x_offset != 0) {
         return true;
     }
@@ -241,6 +243,8 @@ function checkUpBound() {
     let y_cell = Math.floor(posY / 5);
     let x_offset = posX % 5;
     let y_offset = posY % 5;
+
+    console.log(y_cell, ",", x_cell);
 
     if (y_offset != 0) {
         return true;
